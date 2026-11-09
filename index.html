@@ -35,7 +35,34 @@ header{position:sticky;top:0;z-index:50;background:rgba(21,16,17,.92);backdrop-f
 nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
 nav a{padding:8px 13px;border-radius:10px;font-size:14px;color:var(--muted);transition:.2s}
 nav a:hover{color:#fff;background:#31221d}
-@media(max-width:760px){nav{display:none}}
+/* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
+@media(max-width:760px){
+  html,body{overflow-x:hidden}
+  .header-in{flex-direction:column;align-items:center;gap:8px;padding:10px 12px 8px}
+  .topnav{width:100%;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:6px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .topnav::-webkit-scrollbar{display:none}
+  .topnav .pill{padding:10px 14px;font-size:13.5px}
+  .hero{padding:36px 0 28px}
+  .hero h1{font-size:32px}
+  .hero-pizza{width:150px;margin-bottom:18px}
+  .hero p{margin:10px auto 18px}
+  .badges{gap:7px;margin-bottom:20px}
+  .badge{padding:7px 12px;font-size:12px}
+  .btn{padding:13px 24px;font-size:15px}
+  .container{padding:0 14px}
+  .grid{grid-template-columns:1fr;gap:14px}
+  .feat-grid{grid-template-columns:1fr}
+  .builder{grid-template-columns:1fr;padding:20px;gap:20px}
+  .chip{padding:11px 16px;font-size:14px}
+  input,.bk-form textarea{font-size:16px}
+  .sec-title{font-size:25px}
+  .zone{font-size:14px}
+  .cart-bar{flex-direction:column;align-items:stretch;gap:8px;padding:10px 14px}
+  .cart-bar .btn{width:100%}
+  footer{padding:18px 0;font-size:12px}
+}
+.lnk{color:var(--accent2);text-decoration:none;border-bottom:1px dashed rgba(255,181,71,.55)}
+.lnk:hover{color:#fff}
 
 /* ===== Первый экран ===== */
 .hero{position:relative;padding:72px 0 56px;text-align:center;overflow:hidden}
@@ -193,8 +220,6 @@ footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;
 .bk-form input:focus,.bk-form textarea:focus{border-color:var(--accent2,#ff7a2f)}
 .bk-form textarea{grid-column:1/-1;min-height:70px;resize:vertical;font-family:inherit}
 @media(max-width:640px){.bk-form{grid-template-columns:1fr}}
-.map-link{color:#c8402a;text-decoration:underline;text-underline-offset:2px;font-weight:600;word-break:break-word}
-.map-link:hover{color:#a53020}
 </style>
 </head>
 <body id="top">
@@ -269,8 +294,8 @@ footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;
       <h3 class="sec-title">Доставка и самовывоз</h3>
       <div class="zone">📍 <span><b>Доставляем</b> по всему Красноуфимску — бесплатно при заказе от 1 100 ₽.</span></div>
       <div class="zone">🕒 <span><b>Доставка</b> с 10:00 до 23:00. Кафе работает с 9:00 до 23:00.</span></div>
-      <div class="zone">🏠 <span><b>Кафе:</b> ул. Ленина, 82 · <b>Второй адрес:</b> ул. Рогозинниковых, 14</span></div>
-      <div class="zone">🗺️ <span><a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">Найти нас на Яндекс Картах ↗</a></span></div>
+      <div class="zone">🏠 <span><b>Кафе:</b> <a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82</a> · <b>Второй адрес:</b> <a class="lnk" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014" target="_blank" rel="noopener">ул. Рогозинниковых, 14</a></span></div>
+      <div class="zone">🗺️ <span><a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">Найти нас на Яндекс Картах</a></span></div>
       <div class="phones">
         <a class="phone-pill" href="tel:+73410570505">7-05-05</a>
         <a class="phone-pill" href="tel:+79090000884">8-909-0000-884</a>
@@ -285,13 +310,10 @@ footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;
     <div class="sec-sub">Звоните или оформляйте заказ на сайте — он придёт повару мгновенно.</div>
     <div class="contacts">
       <div class="feat"><div class="ic">📞</div><b>Телефоны доставки</b><span>7-05-05<br>8-909-0000-884<br>8-963-055-22-28</span></div>
-      <div class="feat"><div class="ic">📍</div><b>Адреса</b><span>г. Красноуфимск:<br>
-        <a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82 — найти на Яндекс Картах ↗</a><br>
-        <a class="map-link" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014%2C%20%D0%96%D0%B0%D1%80-%D0%BF%D0%B8%D1%86%D1%86%D0%B0" target="_blank" rel="noopener">ул. Рогозинниковых, 14 — найти на Яндекс Картах ↗</a>
-      </span></div>
+      <div class="feat"><div class="ic">📍</div><b>Адреса</b><span>г. Красноуфимск, <a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82</a><br><a class="lnk" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014" target="_blank" rel="noopener">ул. Рогозинниковых, 14</a> — <a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">на Яндекс Картах</a></span></div>
       <div class="feat"><div class="ic">🕒</div><b>Часы работы</b><span>Доставка: 10:00–23:00<br>Кафе: 9:00–23:00</span></div>
       <div class="feat"><div class="ic">💳</div><b>Оплата</b><span>Наличными при вручении или переводом по номеру телефона.</span></div>
-      <div class="feat"><div class="ic">💬</div><b>Мы ВКонтакте</b><span><a class="map-link" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Кафе «Жар-пицца» Красноуфимск ↗</a><br>Новости, акции и меню в нашей группе.</span></div>
+      <div class="feat"><div class="ic">💬</div><b>Мы ВКонтакте</b><span><a class="lnk" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">vk.ru/zharpizza_66</a><br>Новости, акции, меню группы</span></div>
     </div>
   </div>
 </section>
@@ -418,8 +440,8 @@ footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;
       <h3 class="sec-title">Доставка и самовывоз</h3>
       <div class="zone">📍 <span><b>Доставляем</b> по всему Красноуфимску — бесплатно при заказе от 1 100 ₽.</span></div>
       <div class="zone">🕒 <span><b>Доставка</b> с 10:00 до 23:00. Кафе работает с 9:00 до 23:00.</span></div>
-      <div class="zone">🏠 <span><b>Кафе:</b> ул. Ленина, 82 · <b>Второй адрес:</b> ул. Рогозинниковых, 14</span></div>
-      <div class="zone">🗺️ <span><a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">Найти нас на Яндекс Картах ↗</a></span></div>
+      <div class="zone">🏠 <span><b>Кафе:</b> <a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82</a> · <b>Второй адрес:</b> <a class="lnk" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014" target="_blank" rel="noopener">ул. Рогозинниковых, 14</a></span></div>
+      <div class="zone">🗺️ <span><a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">Найти нас на Яндекс Картах</a></span></div>
       <div class="phones">
         <a class="phone-pill" href="tel:+73410570505">7-05-05</a>
         <a class="phone-pill" href="tel:+79090000884">8-909-0000-884</a>
@@ -437,20 +459,17 @@ footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;
     <div class="sec-sub">Звоните или оформляйте заказ на сайте — он придёт повару мгновенно.</div>
     <div class="contacts">
       <div class="feat"><div class="ic">📞</div><b>Телефоны доставки</b><span>7-05-05<br>8-909-0000-884<br>8-963-055-22-28</span></div>
-      <div class="feat"><div class="ic">📍</div><b>Адреса</b><span>г. Красноуфимск:<br>
-        <a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82 — найти на Яндекс Картах ↗</a><br>
-        <a class="map-link" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014%2C%20%D0%96%D0%B0%D1%80-%D0%BF%D0%B8%D1%86%D1%86%D0%B0" target="_blank" rel="noopener">ул. Рогозинниковых, 14 — найти на Яндекс Картах ↗</a>
-      </span></div>
+      <div class="feat"><div class="ic">📍</div><b>Адреса</b><span>г. Красноуфимск, <a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82</a><br><a class="lnk" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014" target="_blank" rel="noopener">ул. Рогозинниковых, 14</a> — <a class="lnk" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">на Яндекс Картах</a></span></div>
       <div class="feat"><div class="ic">🕒</div><b>Часы работы</b><span>Доставка: 10:00–23:00<br>Кафе: 9:00–23:00</span></div>
       <div class="feat"><div class="ic">💳</div><b>Оплата</b><span>Наличными при вручении или переводом по номеру телефона.</span></div>
-      <div class="feat"><div class="ic">💬</div><b>Мы ВКонтакте</b><span><a class="map-link" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Кафе «Жар-пицца» Красноуфимск ↗</a><br>Новости, акции и меню в нашей группе.</span></div>
+      <div class="feat"><div class="ic">💬</div><b>Мы ВКонтакте</b><span><a class="lnk" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">vk.ru/zharpizza_66</a><br>Новости, акции, меню группы</span></div>
     </div>
   </div>
 </section>
 </div><!-- /pg-contacts -->
 
 <footer>
-  Жар Пицца · Красноуфимск · Бесплатная доставка от 1 100 ₽ · <a class="map-link" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Мы ВКонтакте</a><br>
+  Жар Пицца · Красноуфимск · <a class="lnk" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Мы ВКонтакте</a><br>
   <span style="font-size:11px">Демо-версия нового сайта. Цены сверяются с актуальным меню кафе.</span>
 </footer>
 
@@ -520,7 +539,7 @@ function renderFilters(){
 }
 function setCat(c){ curCat=c; renderFilters(); renderGrid();
   const b=document.getElementById("builder"); if(b) b.style.display=(c==="custom")?"":"none";
-  if(c==="custom"){ goPage("menu"); setTimeout(()=>{const b=document.getElementById("builder"); if(b) b.scrollIntoView({behavior:"smooth"});},60); }
+  if(c==="custom"){ goPage("menu"); setTimeout(()=>{const bb=document.getElementById("builder"); if(bb) bb.scrollIntoView({behavior:"smooth"});},60); }
   else window.scrollTo({top:0,behavior:"smooth"});
 }
 
@@ -798,8 +817,8 @@ const BK = {
 function logoHome(){ if(curCat==="custom"){ curCat="pizza"; renderFilters(); renderGrid(); } goPage("home"); return false; }
 function goPage(pg){
   document.querySelectorAll(".pg").forEach(e=>e.classList.toggle("on", e.id==="pg-"+pg));
-  const bb=document.getElementById("builder"); if(bb) bb.style.display=(curCat==="custom")?"":"none";
   document.querySelectorAll(".topnav .pill").forEach(a=>a.classList.toggle("act", a.dataset.pg===pg));
+  const b=document.getElementById("builder"); if(b) b.style.display=(curCat==="custom"&&pg==="menu")?"":"none";
   window.scrollTo({top:0});
 }
 function addWok(i){ const p=WOK[i]; addToCart(p[0], p[2], p[3], `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px">🍜</div>`, "wok"); }
