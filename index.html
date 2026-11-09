@@ -38,29 +38,39 @@ nav a:hover{color:#fff;background:#31221d}
 /* ===== МОБИЛЬНАЯ ВЕРСИЯ ===== */
 @media(max-width:760px){
   html,body{overflow-x:hidden}
-  .header-in{flex-direction:column;align-items:center;gap:8px;padding:10px 12px 8px}
-  .topnav{width:100%;flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;gap:6px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-  .topnav::-webkit-scrollbar{display:none}
-  .topnav .pill{padding:10px 14px;font-size:13.5px}
-  .hero{padding:36px 0 28px}
-  .hero h1{font-size:32px}
-  .hero-pizza{width:150px;margin-bottom:18px}
-  .hero p{margin:10px auto 18px}
-  .badges{gap:7px;margin-bottom:20px}
-  .badge{padding:7px 12px;font-size:12px}
-  .btn{padding:13px 24px;font-size:15px}
+  .header-in{gap:10px;padding:9px 12px}
+  .brand-sub{display:none}
+  .topnav{display:none !important}
+  .m-actions{display:flex;align-items:center;gap:8px;margin-left:auto}
+  .m-cart-btn{position:relative;display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ff6a1a,#ff3d00);border:none;border-radius:12px;padding:10px 14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  .m-badge{background:#fff;color:#ff3d00;border-radius:99px;padding:1px 7px;font-size:12px;font-weight:800}
+  .m-burger{display:flex;align-items:center;justify-content:center;background:var(--card);border:1px solid #3a2a24;border-radius:12px;width:44px;height:44px;color:#fff;font-size:22px;cursor:pointer}
+  .m-nav-panel{display:none;position:absolute;top:100%;left:0;right:0;background:#1d1416;border-bottom:1px solid #33241f;box-shadow:0 14px 30px rgba(0,0,0,.5)}
+  .m-nav-panel.open{display:block}
+  .m-nav-panel a{display:block;padding:14px 18px;color:var(--muted);font-size:16px;text-decoration:none;border-top:1px solid #2a1d19}
+  .m-nav-panel a.act{color:#fff;background:#2a1d19}
+  .hero{padding:28px 0 24px}
+  .hero h1{font-size:29px}
+  .hero-pizza{width:130px;margin-bottom:14px}
+  .hero p{margin:8px auto 16px;font-size:14px}
+  .badges{gap:6px;margin-bottom:16px}
+  .badge{padding:6px 11px;font-size:11.5px}
+  .btn{padding:13px 22px;font-size:15px}
   .container{padding:0 14px}
   .grid{grid-template-columns:1fr;gap:14px}
   .feat-grid{grid-template-columns:1fr}
   .builder{grid-template-columns:1fr;padding:20px;gap:20px}
-  .chip{padding:11px 16px;font-size:14px}
+  .sec-title{font-size:24px}
   input,.bk-form textarea{font-size:16px}
-  .sec-title{font-size:25px}
-  .zone{font-size:14px}
-  .cart-bar{flex-direction:column;align-items:stretch;gap:8px;padding:10px 14px}
+  .filters{position:sticky;top:56px;z-index:40;background:rgba(21,16,17,.95);backdrop-filter:blur(10px);flex-wrap:nowrap;overflow-x:auto;gap:6px;padding:10px 12px;margin:0 -12px 16px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .filters .chip{flex:0 0 auto;padding:11px 15px;font-size:14px}
+  .pg{padding-bottom:84px}
+  .cart-bar{flex-direction:column;align-items:stretch;gap:8px;padding:10px 14px;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
   .cart-bar .btn{width:100%}
   footer{padding:18px 0;font-size:12px}
 }
+@media(min-width:761px){.m-actions,.m-nav-panel{display:none !important}}
 .lnk{color:var(--accent2);text-decoration:none;border-bottom:1px dashed rgba(255,181,71,.55)}
 .lnk:hover{color:#fff}
 
@@ -246,6 +256,18 @@ footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;
       <a class="pill" data-pg="contacts" onclick="goPage('contacts')">📍<span> Контакты</span></a>
       <a class="pill pill-cart" data-pg="cart" onclick="goPage('cart')">🛒<span> Корзина</span> <b id="navBadge" class="nav-badge">0</b></a>
     </nav>
+    <div class="m-actions">
+      <button class="m-cart-btn" onclick="goPage('cart')" aria-label="Корзина">🛒<b id="mBadge" class="m-badge">0</b></button>
+      <button class="m-burger" onclick="toggleMenu()" aria-label="Меню">☰</button>
+    </div>
+  </div>
+  <div class="m-nav-panel" id="mPanel">
+    <a data-pg="home" onclick="goPage('home')">🏠 Главная</a>
+    <a data-pg="menu" onclick="goPage('menu')">🍕 Меню</a>
+    <a data-pg="banket" onclick="goPage('banket')">🎉 Банкетный зал</a>
+    <a data-pg="delivery" onclick="goPage('delivery')">🚚 Доставка</a>
+    <a data-pg="contacts" onclick="goPage('contacts')">📍 Контакты</a>
+    <a data-pg="cart" onclick="goPage('cart')">🛒 Корзина</a>
   </div>
 </header>
 
@@ -671,6 +693,7 @@ function renderCart(){
   document.getElementById("cartBar").classList.toggle("show", n>0);
   document.getElementById("shipNote").textContent = n===0 ? "" : selfPickup ? "Самовывоз — без доставки" : (t.sum>=FREE_FROM ? "Доставка бесплатна 🎉" : `До бесплатной доставки: ${fmt(FREE_FROM-t.sum)} ₽`);
   const nb=document.getElementById("navBadge"); if(nb) nb.textContent=n;
+  const mb=document.getElementById("mBadge"); if(mb) mb.textContent=n;
   renderCartTab(t, n);
 }
 function payHints(t){
@@ -819,8 +842,12 @@ function goPage(pg){
   document.querySelectorAll(".pg").forEach(e=>e.classList.toggle("on", e.id==="pg-"+pg));
   document.querySelectorAll(".topnav .pill").forEach(a=>a.classList.toggle("act", a.dataset.pg===pg));
   const b=document.getElementById("builder"); if(b) b.style.display=(curCat==="custom"&&pg==="menu")?"":"none";
+  document.querySelectorAll(".m-nav-panel a").forEach(a=>a.classList.toggle("act", a.dataset.pg===pg));
+  closeMenu();
   window.scrollTo({top:0});
 }
+function toggleMenu(){const p=document.getElementById("mPanel");if(p)p.classList.toggle("open");}
+function closeMenu(){const p=document.getElementById("mPanel");if(p)p.classList.remove("open");}
 function addWok(i){ const p=WOK[i]; addToCart(p[0], p[2], p[3], `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px">🍜</div>`, "wok"); }
 function addBur(i){ const p=BURS[i]; addToCart(p[0], p[2]||"", p[3], `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px">🌯</div>`, "bur"); }
 function bkIcon(c){ return c==="Салаты" ? "🥗" : c==="Нарезки" ? "🧀" : c==="Горячее" ? "🍲" : "🍟"; }
