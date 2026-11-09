@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Жар Пицца — доставка пиццы, роллов и суши в Красноуфимске</title>
+<meta name="description" content="Доставка пиццы, роллов, суши и сетов в Красноуфимске. Бесплатная доставка от 1100 ₽, с 10:00 до 23:00. Заказ онлайн или по телефону 7-05-05.">
+<style>
+:root{
+  --bg:#151011; --bg2:#1f1614; --card:#241a17; --card2:#2b201c;
+  --txt:#f5e9dd; --muted:#b9a595; --accent:#ff6a1a; --accent2:#ffb547;
+  --danger:#e5382b; --ok:#57c56f; --radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.5}
+img,svg{display:block}
+a{color:inherit;text-decoration:none}
+.container{max-width:1180px;margin:0 auto;padding:0 18px}
+
+/* ===== Хедер и логотип ===== */
+header{position:sticky;top:0;z-index:50;background:rgba(21,16,17,.92);backdrop-filter:blur(10px);border-bottom:1px solid #33241f}
+.header-in{display:flex;align-items:center;gap:24px;padding:12px 18px;max-width:1180px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;transition:transform .25s}
+.brand:hover{transform:scale(1.05)}
+.brand:active{transform:scale(.97)}
+.brand-flame{width:34px;height:44px;overflow:visible}
+.brand-flame .f1{animation:flicker 1.1s ease-in-out infinite alternate;transform-origin:50% 100%}
+.brand-flame .f2{animation:flicker 1.5s .3s ease-in-out infinite alternate;transform-origin:50% 100%}
+.brand-flame .f3{animation:flicker .9s .15s ease-in-out infinite alternate;transform-origin:50% 100%}
+@keyframes flicker{from{transform:scaleY(1) scaleX(1)}55%{transform:scaleY(1.18) scaleX(.94)}to{transform:scaleY(.92) scaleX(1.06)}}
+.brand-txt{font-weight:800;font-size:26px;letter-spacing:2px;background:linear-gradient(90deg,#ffd76a,#ff8c1a,#ff3d00,#ff8c1a,#ffd76a);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:flameShift 3.2s linear infinite}
+@keyframes flameShift{to{background-position:300% 0}}
+.brand-sub{font-size:11px;color:var(--muted);letter-spacing:.5px;margin-top:-4px}
+nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+nav a{padding:8px 13px;border-radius:10px;font-size:14px;color:var(--muted);transition:.2s}
+nav a:hover{color:#fff;background:#31221d}
+@media(max-width:760px){nav{display:none}}
+
+/* ===== Первый экран ===== */
+.hero{position:relative;padding:72px 0 56px;text-align:center;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% -20%,rgba(255,106,26,.22),transparent 60%)}
+.hero h1{font-size:clamp(30px,5vw,52px);font-weight:800;line-height:1.15}
+.hero h1 em{font-style:normal;color:var(--accent2)}
+.hero p{color:var(--muted);max-width:520px;margin:14px auto 26px}
+.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.badge{background:var(--card);border:1px solid #3a2a24;border-radius:99px;padding:8px 16px;font-size:13px;color:var(--accent2)}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--accent),#ff3d00);color:#fff;font-weight:700;padding:14px 30px;border-radius:12px;border:none;cursor:pointer;font-size:16px;transition:.2s;box-shadow:0 6px 22px rgba(255,90,20,.35)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,90,20,.45)}
+.hero-pizza{width:210px;margin:0 auto 24px;animation:spin 24s linear infinite;filter:drop-shadow(0 14px 30px rgba(0,0,0,.5))}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.hero-pizza,.brand-txt,.brand-flame *{animation:none}}
+
+/* ===== Меню ===== */
+section{padding:56px 0}
+.sec-title{font-size:clamp(24px,3.4vw,34px);font-weight:800;margin-bottom:6px}
+.sec-sub{color:var(--muted);margin-bottom:22px}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.chip{background:var(--card);border:1px solid #3a2a24;color:var(--muted);padding:9px 18px;border-radius:99px;cursor:pointer;font-size:14px;transition:.2s}
+.chip.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid #3a2a24;border-radius:var(--radius);padding:18px;display:flex;flex-direction:column;transition:.25s;position:relative}
+.card:hover{transform:translateY(-4px);border-color:#553b30;background:var(--card2)}
+.card-img{height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.card-img svg{width:130px;height:130px}
+.card h3{font-size:17px;font-weight:700}
+.card .ing{font-size:12.5px;color:var(--muted);margin:6px 0 10px;flex:1}
+.card .meta{font-size:12px;color:#8d7a6b;margin-bottom:10px}
+.sizes{display:flex;gap:6px;margin-bottom:12px}
+.size-btn{flex:1;background:#2e211d;border:1px solid #443028;color:var(--muted);padding:7px 0;border-radius:9px;cursor:pointer;font-size:13px;transition:.15s}
+.size-btn.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.price-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.price{font-size:20px;font-weight:800;color:var(--accent2);white-space:nowrap}
+.add-btn{background:var(--accent);border:none;color:#fff;font-weight:700;padding:10px 16px;border-radius:10px;cursor:pointer;font-size:14px;transition:.2s;white-space:nowrap}
+.add-btn:hover{background:#ff7f38}
+.note{font-size:12px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed #3a2a24}
+
+/* ===== Конструктор ===== */
+.builder{background:var(--bg2);border-radius:24px;padding:30px;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+@media(max-width:820px){.builder{grid-template-columns:1fr}}
+.opt-group{margin-bottom:18px}
+.opt-group h4{margin-bottom:10px;font-size:15px;color:var(--accent2)}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{background:#2e211d;border:1px solid #443028;color:var(--muted);padding:8px 15px;border-radius:99px;cursor:pointer;font-size:13.5px;transition:.15s}
+.pill.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.toppings{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:480px){.toppings{grid-template-columns:1fr}}
+.top-item{display:flex;justify-content:space-between;align-items:center;background:#2e211d;border:1px solid #443028;border-radius:10px;padding:9px 12px;font-size:13.5px;cursor:pointer;transition:.15s}
+.top-item.on{border-color:var(--accent);background:#3d2a20;color:#fff}
+.top-item .tp{color:var(--accent2);font-weight:700;font-size:13px}
+.b-total{font-size:24px;font-weight:800;color:var(--accent2)}
+.b-total small{font-size:13px;color:var(--muted);font-weight:400}
+
+/* ===== Доверие, доставка ===== */
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.feat{background:var(--card);border:1px solid #3a2a24;border-radius:var(--radius);padding:20px}
+.feat .ic{font-size:30px;margin-bottom:10px}
+.feat b{display:block;margin-bottom:5px}
+.feat span{font-size:13.5px;color:var(--muted)}
+.delivery-box{background:linear-gradient(135deg,#2b1710,#241a17);border:1px solid #4a2e1e;border-radius:20px;padding:28px}
+.delivery-box h3{margin-bottom:12px}
+.zone{display:flex;gap:10px;align-items:flex-start;margin:8px 0;color:var(--muted);font-size:14.5px}
+.zone b{color:var(--txt)}
+.phones{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.phone-pill{background:#33221b;border:1px solid #55381f;border-radius:12px;padding:12px 18px;font-size:18px;font-weight:700;color:var(--accent2)}
+
+/* ===== Контакты ===== */
+.contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+footer{border-top:1px solid #33241f;padding:26px 0;color:#8d7a6b;font-size:13px;text-align:center}
+
+/* ===== Акция ===== */
+.promo{background:linear-gradient(135deg,rgba(255,181,71,.14),rgba(229,56,43,.14));border:1px dashed var(--accent2);border-radius:18px;padding:22px 28px;margin:26px auto 0;max-width:760px;text-align:center}
+.promo h3{color:var(--accent2);font-size:20px;margin-bottom:6px}
+.promo p{color:var(--muted);font-size:14px}
+
+/* ===== Вкладка «Корзина» ===== */
+.cart-empty{text-align:center;padding:40px 0}
+.cart-empty .big{font-size:56px;margin-bottom:10px}
+.cart-empty b{font-size:20px}
+.cart-empty p{color:var(--muted);margin:8px 0 18px}
+.citem{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid #3a2a24;border-radius:var(--radius);padding:12px 14px;margin-bottom:10px}
+.citem.gift{border-color:var(--accent2);background:#2e2216}
+.cimg{width:64px;height:64px;flex:none;border-radius:12px;background:var(--bg2);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cimg svg{width:58px;height:58px}
+.cinfo{flex:1;min-width:0}
+.cinfo b{font-size:15px}
+.cinfo small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+.gift-tag{color:var(--accent2);font-weight:700}
+.qty{display:flex;align-items:center;gap:8px;flex:none}
+.qty button{width:32px;height:32px;border-radius:9px;background:#2e211d;border:1px solid #443028;color:var(--txt);font-size:17px;cursor:pointer;transition:.15s}
+.qty button:hover{border-color:var(--accent);color:var(--accent2)}
+.qty b{min-width:22px;text-align:center;font-size:16px}
+.cprice{text-align:right;min-width:92px;flex:none;font-size:14px}
+.cprice s{color:#8d7a6b;font-size:12px}
+.cprice b{color:var(--accent2);font-size:16px}
+.del{flex:none;background:none;border:1px solid #443028;border-radius:9px;padding:7px 9px;cursor:pointer;font-size:14px;transition:.15s}
+.del:hover{border-color:var(--danger);background:rgba(229,56,43,.12)}
+.cart-layout{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;margin-top:6px}
+@media(max-width:900px){.cart-layout{grid-template-columns:1fr}}
+.cart-h{font-size:19px;font-weight:800;margin-bottom:14px}
+.sumrow{display:flex;justify-content:space-between;padding:9px 2px;font-size:14.5px;color:var(--muted);border-bottom:1px dashed #3a2a24}
+.sumrow.total{border-bottom:none;font-size:18px;font-weight:800;color:var(--txt);padding-top:12px}
+.sumrow.total span:last-child{color:var(--accent2)}
+.sumrow.gift-row{color:var(--accent2)}
+.hint{font-size:13px;margin-top:10px;padding:10px 12px;border-radius:10px;background:#2e211d}
+.hint.gold{color:var(--accent2);border:1px dashed var(--accent2)}
+.promo-check{display:flex;gap:12px;align-items:flex-start;background:#2e211d;border:1px dashed var(--accent2);border-radius:12px;padding:12px 14px;margin:14px 0}
+.promo-check input{accent-color:var(--accent);width:18px;height:18px;margin-top:3px;flex:none}
+.promo-check p{font-size:12.5px;color:var(--muted)}
+.promo-check b{color:var(--txt)}
+
+/* ===== Корзина ===== */
+.cart-bar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:linear-gradient(90deg,#241a17,#2b1c15);border-top:2px solid var(--accent);padding:12px 18px;display:none;justify-content:space-between;align-items:center;gap:14px;box-shadow:0 -8px 30px rgba(0,0,0,.5),transition:transform .18s}
+.cart-bar.show{display:flex}
+.cart-info{font-size:14.5px}
+.cart-info b{color:var(--accent2);font-size:18px}
+.ship-note{font-size:12px;color:var(--ok)}
+.modal{position:fixed;inset:0;z-index:100;background:rgba(10,6,5,.8);display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:30px 14px}
+.modal.show{display:flex}
+.modal-card{background:var(--card);border:1px solid #4a3226;border-radius:20px;max-width:520px;width:100%;padding:28px;margin:auto}
+.modal-card h3{margin-bottom:16px;font-size:22px}
+.f-label{font-size:13px;color:var(--muted);display:block;margin:12px 0 5px}
+.f-label .req{color:var(--danger)}
+.inp{width:100%;background:#2e211d;border:1px solid #443028;border-radius:10px;color:var(--txt);padding:12px 14px;font-size:15px;outline:none}
+.inp:focus{border-color:var(--accent)}
+.self-row{display:flex;align-items:center;gap:10px;margin:14px 0;background:#2e211d;border-radius:10px;padding:11px 14px;cursor:pointer}
+.self-row input{accent-color:var(--accent);width:18px;height:18px}
+.pay-group{display:flex;gap:8px;margin-top:6px}
+.order-lines{background:#2e211d;border-radius:12px;padding:14px;font-size:13.5px;color:var(--muted);max-height:150px;overflow-y:auto;margin-bottom:6px}
+.order-lines b{color:var(--txt)}
+.m-total{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:800;margin:12px 0 18px}
+.m-total span:last-child{color:var(--accent2)}
+.m-close{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--muted);font-size:26px;cursor:pointer}
+.modal-card{position:relative}
+.success{display:none;text-align:center;padding:30px 0}
+.success .big{font-size:52px;margin-bottom:12px}
+
+/* страницы */
+.pg{display:none}
+.pg.on{display:block}
+/* пилюли-навигация */
+.topnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.topnav .pill{display:inline-flex;align-items:center;gap:6px;padding:9px 15px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:var(--muted);cursor:pointer;font-weight:600;font-size:14px;transition:all .18s;background:transparent;text-decoration:none;white-space:nowrap}
+.topnav .pill:hover{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.topnav .pill.act{background:linear-gradient(135deg,#ff7a2f,#ff4d00);color:#fff;border-color:transparent;box-shadow:0 6px 18px rgba(255,90,0,.35)}
+.nav-badge{background:#e53935;color:#fff;border-radius:999px;font-size:12px;padding:1px 8px;font-weight:700;min-width:20px;text-align:center}
+.topnav .pill.act .nav-badge{background:#fff;color:#ff4d00}
+/* банкетный зал */
+.bk-book{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:22px;margin-top:30px}
+.bk-book h3{margin:0 0 6px;font-size:22px}
+.bk-form{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.bk-form input,.bk-form textarea{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:12px 14px;color:#fff;font-size:15px;outline:none;width:100%;box-sizing:border-box}
+.bk-form input:focus,.bk-form textarea:focus{border-color:var(--accent2,#ff7a2f)}
+.bk-form textarea{grid-column:1/-1;min-height:70px;resize:vertical;font-family:inherit}
+@media(max-width:640px){.bk-form{grid-template-columns:1fr}}
+.map-link{color:#c8402a;text-decoration:underline;text-underline-offset:2px;font-weight:600;word-break:break-word}
+.map-link:hover{color:#a53020}
+</style>
+</head>
+<body id="top">
+
+<header>
+  <div class="header-in">
+    <!-- ЛОГОТИП: кликабельный, ведёт на главный экран -->
+    <a class="brand" href="#top" onclick="return logoHome()" aria-label="Жар Пицца — на главную">
+      <svg class="brand-flame" viewBox="0 0 34 44" fill="none">
+        <path class="f3" d="M17 12 C13 20 9 23 9 30 a8 8 0 0 0 16 0 C25 23 21 20 17 12Z" fill="#ff3d00" opacity=".85"/>
+        <path class="f2" d="M17 17 C14.5 22 12 24.5 12 29 a5 5 0 0 0 10 0 C22 24.5 19.5 22 17 17Z" fill="#ff8c1a"/>
+        <path class="f1" d="M17 24 C15.8 26.5 15 27.8 15 30 a2.2 2.2 0 0 0 4.4 0 C19.4 27.8 18.2 26.5 17 24Z" fill="#ffd76a"/>
+      </svg>
+      <span>
+        <span class="brand-txt">ЖАР ПИЦЦА</span><br>
+        <span class="brand-sub">доставка · Красноуфимск</span>
+      </span>
+    </a>
+    <nav class="topnav">
+      <a class="pill" data-pg="home" onclick="goPage('home')">🏠<span> Главная</span></a>
+      <a class="pill" data-pg="menu" onclick="goPage('menu')">🍕<span> Меню</span></a>
+      <a class="pill" data-pg="banket" onclick="goPage('banket')">🎉<span> Банкетный зал</span></a>
+      <a class="pill" data-pg="delivery" onclick="goPage('delivery')">🚚<span> Доставка</span></a>
+      <a class="pill" data-pg="contacts" onclick="goPage('contacts')">📍<span> Контакты</span></a>
+      <a class="pill pill-cart" data-pg="cart" onclick="goPage('cart')">🛒<span> Корзина</span> <b id="navBadge" class="nav-badge">0</b></a>
+    </nav>
+  </div>
+</header>
+
+<div class="pg on" id="pg-home">
+<div class="hero">
+  <div class="container">
+    <svg class="hero-pizza" viewBox="0 0 200 200"><g transform="translate(100,100)"><circle r="96" fill="#d99e4e"/><circle r="96" fill="none" stroke="#b87b34" stroke-width="7"/><circle r="80" fill="#c8402a"/><circle r="80" fill="none" stroke="#a53020" stroke-width="4" stroke-dasharray="18 9"/><circle r="76" fill="#f7c05a"/><g fill="#d94f2b"><circle cx="-34" cy="-30" r="11"/><circle cx="26" cy="-40" r="11"/><circle cx="44" cy="8" r="11"/><circle cx="-8" cy="10" r="11"/><circle cx="-42" cy="34" r="11"/><circle cx="12" cy="48" r="11"/><circle cx="40" cy="-16" r="5"/><circle cx="-16" cy="-52" r="5"/><circle cx="-58" cy="-2" r="5"/></g><g fill="#e8f0d8" opacity=".9"><path d="M-14 34 l14 -8 -2 14Z"/><path d="M52 38 l12 -7 -2 12Z"/><path d="M-52 -40 l12 -7 -2 12Z"/></g><g fill="#4d7a2e"><rect x="-6" y="-70" width="12" height="4" rx="2" transform="rotate(20)"/><rect x="30" y="24" width="12" height="4" rx="2" transform="rotate(-40 30 24)"/><rect x="-60" y="10" width="12" height="4" rx="2" transform="rotate(60 -60 10)"/></g></g></svg>
+    <h1>Горячая пицца из <em>настоящей печи</em> — за 40 минут у вашей двери</h1>
+    <p>Пицца, роллы, сеты и коктейли. Тесто готовим сами, печём только после вашего заказа — от одного шеф-повара до целого банкета.</p>
+    <div class="badges">
+      <span class="badge">🔥 Доставка 10:00–23:00</span>
+      <span class="badge">🚗 Бесплатно от 1 100 ₽</span>
+      <span class="badge">⏱ 40 минут</span>
+      <span class="badge">🍕 38 видов пиццы</span>
+    </div>
+    <div class="promo">
+      <h3>🎉 Именинникам — пицца в подарок!</h3>
+      <p>При заказе двух пицц на 40 см — третья пицца (33 см) бесплатно. Действует за 3 дня до Дня рождения и 3 дня после. Подарок при наличной оплате, пиццы «Кальцоне» и «Рождественская» в акции не участвуют. Просто отметьте «У меня день рождения» в корзине!</p>
+    </div>
+    </div>
+</div>
+
+<section id="menu">
+  <div class="container">
+    <div class="sec-title">Меню</div>
+    <div class="sec-sub">Цены — как в кафе «Жар-пицца». У пицц два размера: 30 и 40 см.</div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+<section>
+  <div class="container">
+    <div class="sec-title">Почему выбирают нас</div>
+    <div class="sec-sub">Меньше слов — больше дела, как в нашем кафе на Ленина, 82.</div>
+    <div class="feat-grid">
+      <div class="feat"><div class="ic">🧑‍🍳</div><b>Тесто своё</b><span>Готовим каждое утро, без заморозки — хрустящий бортик и мягкая середина.</span></div>
+      <div class="feat"><div class="ic">🔥</div><b>Печём после заказа</b><span>Никаких заготовок. Пицца выходит из печи и сразу едет к вам в термоконтейнере.</span></div>
+      <div class="feat"><div class="ic">🍣</div><b>Роллы и сеты</b><span>Филадельфия, унаги, острые спайси и сет-наборы — суши-меню того же качества.</span></div>
+      <div class="feat"><div class="ic">🎉</div><b>Банкетный зал</b><span>Дни рождения и компании до 20 человек: ул. Ленина, 82. Горячие блюда и салаты из меню кафе.</span></div>
+    </div>
+  </div>
+</section>
+<section class="delivery-clone">
+  <div class="container">
+    <div class="delivery-box">
+      <h3 class="sec-title">Доставка и самовывоз</h3>
+      <div class="zone">📍 <span><b>Доставляем</b> по всему Красноуфимску — бесплатно при заказе от 1 100 ₽.</span></div>
+      <div class="zone">🕒 <span><b>Доставка</b> с 10:00 до 23:00. Кафе работает с 9:00 до 23:00.</span></div>
+      <div class="zone">🏠 <span><b>Кафе:</b> ул. Ленина, 82 · <b>Второй адрес:</b> ул. Рогозинниковых, 14</span></div>
+      <div class="zone">🗺️ <span><a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">Найти нас на Яндекс Картах ↗</a></span></div>
+      <div class="phones">
+        <a class="phone-pill" href="tel:+73410570505">7-05-05</a>
+        <a class="phone-pill" href="tel:+79090000884">8-909-0000-884</a>
+        <a class="phone-pill" href="tel:+79630552228">8-963-055-22-28</a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="contacts-clone">
+  <div class="container">
+    <div class="sec-title">Контакты</div>
+    <div class="sec-sub">Звоните или оформляйте заказ на сайте — он придёт повару мгновенно.</div>
+    <div class="contacts">
+      <div class="feat"><div class="ic">📞</div><b>Телефоны доставки</b><span>7-05-05<br>8-909-0000-884<br>8-963-055-22-28</span></div>
+      <div class="feat"><div class="ic">📍</div><b>Адреса</b><span>г. Красноуфимск:<br>
+        <a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82 — найти на Яндекс Картах ↗</a><br>
+        <a class="map-link" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014%2C%20%D0%96%D0%B0%D1%80-%D0%BF%D0%B8%D1%86%D1%86%D0%B0" target="_blank" rel="noopener">ул. Рогозинниковых, 14 — найти на Яндекс Картах ↗</a>
+      </span></div>
+      <div class="feat"><div class="ic">🕒</div><b>Часы работы</b><span>Доставка: 10:00–23:00<br>Кафе: 9:00–23:00</span></div>
+      <div class="feat"><div class="ic">💳</div><b>Оплата</b><span>Наличными при вручении или переводом по номеру телефона.</span></div>
+      <div class="feat"><div class="ic">💬</div><b>Мы ВКонтакте</b><span><a class="map-link" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Кафе «Жар-пицца» Красноуфимск ↗</a><br>Новости, акции и меню в нашей группе.</span></div>
+    </div>
+  </div>
+</section>
+</div><!-- /pg-home -->
+
+<div class="pg" id="pg-menu">
+<section>
+  <div class="container">
+    <div class="sec-title">Меню</div>
+    <div class="sec-sub">Цены — как в кафе «Жар-пицца». У пицц два размера: 30 и 40 см.</div>
+    <div class="filters" id="filters2"></div>
+    <div class="grid" id="grid2"></div>
+  </div>
+</section>
+<section id="builder" style="display:none">
+  <div class="container">
+    <div class="sec-title">Создай свою пиццу</div>
+    <div class="sec-sub">Как «Моя пицца» в нашем кафе: база 540 ₽ + ингредиенты по 90 ₽. Собери за минуту.</div>
+    <div class="builder">
+      <div>
+        <div class="opt-group">
+          <h4>Размер</h4>
+          <div class="pills" id="bSizes"></div>
+        </div>
+        <div class="opt-group">
+          <h4>Соус</h4>
+          <div class="pills" id="bSauce"></div>
+        </div>
+        <div class="opt-group">
+          <h4>Ингредиенты — по 90 ₽ каждый</h4>
+          <div class="toppings" id="bTops"></div>
+        </div>
+      </div>
+      <div style="text-align:center">
+        <div id="bPizza" style="width:220px;margin:0 auto 16px"></div>
+        <div class="b-total" id="bTotal"></div>
+        <div style="height:12px"></div>
+        <button class="btn" onclick="addCustom()">В корзину</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /pg-menu -->
+
+<div class="pg" id="pg-banket">
+<section id="banket">
+  <div class="container">
+    <div class="sec-title">🎉 Банкетный зал</div>
+    <div class="sec-sub">Праздники, корпоративы, юбилеи и просто встречи. Блюда из меню кафе доступны и для банкета. Зал — ул. Ленина, 82.</div>
+    <div class="bk-book">
+      <h3>Забронировать зал</h3>
+      <p class="sec-sub" style="margin:0">Оставьте заявку — администратор перезвонит и подтвердит бронь.</p>
+      <div class="bk-form">
+        <input id="bkName" placeholder="Имя *">
+        <input id="bkPhone" placeholder="Телефон *">
+        <input id="bkDate" type="date" title="Дата">
+        <input id="bkTime" type="time" title="Время">
+        <input id="bkGuests" type="number" min="1" placeholder="Количество персон *">
+        <textarea id="bkNote" placeholder="Пожелания: меню, украшение, торт…"></textarea>
+      </div>
+      <div style="height:14px"></div>
+      <button class="btn" onclick="bookHall()">Забронировать зал</button>
+    </div>
+    <div style="height:34px"></div>
+    <div class="filters" id="bkFilters"></div>
+    <div class="grid" id="bkGrid"></div>
+  </div>
+</section>
+</div>
+
+<div class="pg" id="pg-cart">
+<section id="cart">
+  <div class="container">
+    <div class="sec-title">Корзина</div>
+    <div class="sec-sub" id="cartSub">Пока пусто — выберите что-нибудь из меню.</div>
+    <div id="cartItems"></div>
+    <div id="cartPanel" style="display:none">
+      <div class="cart-layout">
+        <div>
+          <h3 class="cart-h">Ваш заказ</h3>
+          <div id="cartList"></div>
+          <div id="cartSummary"></div>
+        </div>
+        <div>
+          <h3 class="cart-h">Оформление заказа</h3>
+          <label class="f-label">Имя <span class="req">*</span></label>
+          <input class="inp" id="fName" placeholder="Как к вам обращаться">
+          <label class="f-label">Телефон <span class="req">*</span></label>
+          <input class="inp" id="fPhone" placeholder="+7 (___) ___-__-__" inputmode="tel">
+          <label class="self-row"><input type="checkbox" id="fSelf" onchange="selfPickup=this.checked;toggleAddr();renderCart()"><span><b>Я заберу заказ сам</b> — тогда адрес не нужен</span></label>
+          <div id="addrWrap">
+            <label class="f-label">Адрес доставки <span class="req">*</span></label>
+            <input class="inp" id="fAddr" placeholder="Улица, дом, квартира">
+          </div>
+          <label class="f-label">Комментарий к заказу (например, количество персон)</label>
+          <textarea class="inp" id="fComment" rows="2" placeholder="Без лука, звонить за 10 минут..."></textarea>
+          <label class="f-label">Способ оплаты</label>
+          <div class="pay-group">
+            <button class="chip on" data-pay="cash" onclick="setPay(this)">💵 Наличными</button>
+            <button class="chip" data-pay="card" onclick="setPay(this)">💳 Картой курьеру</button>
+          </div>
+          <div class="promo-check">
+            <input type="checkbox" id="bdayBox" onchange="bday=this.checked;renderCart()">
+            <p><b>🎉 У меня день рождения!</b><br>При заказе двух пицц на 40 см — третья пицца (33 см) в подарок. Действует за 3 дня до и 3 дня после Дня рождения, при наличной оплате. «Кальцоне» и «Рождественская» не участвуют. Попросите администратора подтвердить акцию.</p>
+          </div>
+          <button class="btn" style="width:100%;font-size:17px" onclick="submitOrder()">ОТПРАВИТЬ ЗАКАЗ</button>
+          <p style="font-size:11.5px;color:#8d7a6b;margin-top:10px;text-align:center">Заказ уйдёт в Telegram кафе. Либо позвоните: 7-05-05</p>
+        </div>
+      </div>
+    </div>
+    <div class="success" id="cartOk">
+      <div class="big">🍕</div>
+      <h3>Заказ принят!</h3>
+      <p style="color:var(--muted);margin-top:8px">Номер заказа: <b id="orderNum" style="color:var(--accent2)">—</b>.<br>Повар уже смотрит на вашу пиццу. Ожидайте звонок для подтверждения.</p>
+    </div>
+  </div>
+</section>
+</div><!-- /pg-cart -->
+
+<div class="pg" id="pg-delivery">
+<section id="delivery">
+  <div class="container">
+    <div class="delivery-box">
+      <h3 class="sec-title">Доставка и самовывоз</h3>
+      <div class="zone">📍 <span><b>Доставляем</b> по всему Красноуфимску — бесплатно при заказе от 1 100 ₽.</span></div>
+      <div class="zone">🕒 <span><b>Доставка</b> с 10:00 до 23:00. Кафе работает с 9:00 до 23:00.</span></div>
+      <div class="zone">🏠 <span><b>Кафе:</b> ул. Ленина, 82 · <b>Второй адрес:</b> ул. Рогозинниковых, 14</span></div>
+      <div class="zone">🗺️ <span><a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">Найти нас на Яндекс Картах ↗</a></span></div>
+      <div class="phones">
+        <a class="phone-pill" href="tel:+73410570505">7-05-05</a>
+        <a class="phone-pill" href="tel:+79090000884">8-909-0000-884</a>
+        <a class="phone-pill" href="tel:+79630552228">8-963-055-22-28</a>
+      </div>
+    </div>
+  </div>
+</section>
+</div><!-- /pg-delivery -->
+
+<div class="pg" id="pg-contacts">
+<section id="contacts">
+  <div class="container">
+    <div class="sec-title">Контакты</div>
+    <div class="sec-sub">Звоните или оформляйте заказ на сайте — он придёт повару мгновенно.</div>
+    <div class="contacts">
+      <div class="feat"><div class="ic">📞</div><b>Телефоны доставки</b><span>7-05-05<br>8-909-0000-884<br>8-963-055-22-28</span></div>
+      <div class="feat"><div class="ic">📍</div><b>Адреса</b><span>г. Красноуфимск:<br>
+        <a class="map-link" href="https://yandex.ru/maps/org/zhar_pitstsa/1279899729/" target="_blank" rel="noopener">ул. Ленина, 82 — найти на Яндекс Картах ↗</a><br>
+        <a class="map-link" href="https://yandex.ru/maps/?text=%D0%9A%D1%80%D0%B0%D1%81%D0%BD%D0%BE%D1%83%D1%84%D0%B8%D0%BC%D1%81%D0%BA%2C%20%D1%83%D0%BB%D0%B8%D1%86%D0%B0%20%D0%A0%D0%BE%D0%B3%D0%BE%D0%B7%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D1%8B%D1%85%2C%2014%2C%20%D0%96%D0%B0%D1%80-%D0%BF%D0%B8%D1%86%D1%86%D0%B0" target="_blank" rel="noopener">ул. Рогозинниковых, 14 — найти на Яндекс Картах ↗</a>
+      </span></div>
+      <div class="feat"><div class="ic">🕒</div><b>Часы работы</b><span>Доставка: 10:00–23:00<br>Кафе: 9:00–23:00</span></div>
+      <div class="feat"><div class="ic">💳</div><b>Оплата</b><span>Наличными при вручении или переводом по номеру телефона.</span></div>
+      <div class="feat"><div class="ic">💬</div><b>Мы ВКонтакте</b><span><a class="map-link" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Кафе «Жар-пицца» Красноуфимск ↗</a><br>Новости, акции и меню в нашей группе.</span></div>
+    </div>
+  </div>
+</section>
+</div><!-- /pg-contacts -->
+
+<footer>
+  Жар Пицца · Красноуфимск · Бесплатная доставка от 1 100 ₽ · <a class="map-link" href="https://vk.ru/zharpizza_66" target="_blank" rel="noopener">Мы ВКонтакте</a><br>
+  <span style="font-size:11px">Демо-версия нового сайта. Цены сверяются с актуальным меню кафе.</span>
+</footer>
+
+<!-- Нижняя плашка корзины -->
+<div class="cart-bar" id="cartBar">
+  <div class="cart-info">В корзине: <b id="cartCount">0</b> · <span id="cartSum">0 ₽</span><br><span class="ship-note" id="shipNote"></span></div>
+  <button class="btn" onclick="goPage('cart')">Перейти в корзину</button>
+</div>
+
+<script>
+/* ============ ДАННЫЕ: реальное меню кафе «Жар-пицца» (zhar-pizza66.ru) ============ */
+const PIZZAS = [["Жар пицца", "копчёная куриная грудка, оливки, фирменный белый соус, помидоры, сыр", 860, 1090, 1350, "chicken"], ["Тарантеллос", "маслины, сосиски докторские, томатный соус, помидоры, сыр", 730, 1060, 1200, "meat"], ["С тунцом", "консервированный тунец, томатный соус, помидоры, сыр", 720, 1090, 1260, "seafood"], ["Кальцоне", "ветчина, шампиньоны, томатный соус, помидоры, сыр", 490, 900, 1050, "meat"], ["Бычий глаз", "ветчина, яйцо, томатный соус, помидоры, сыр", 730, 1060, 1240, "meat"], ["Шампиньони", "шампиньоны, фирменный пикантный соус, помидоры, сыр", 720, 1060, 1280, "mushroom"], ["Крестьянка", "зелень, ветчина, творожная заливка, томатный соус, помидоры", 860, 1040, 1190, "meat"], ["Морской коктейль", "оливки, маслины, помидоры, сыр, креветки, мидии, осьминоги, кальмары", 760, 1090, 1260, "seafood"], ["Каприччио", "ветчина, колбаса, сосиски, рыба, томатный соус, помидоры, сыр, грибы", 820, 1080, 1280, "meat"], ["Донна Груша", "киви, бананы, груша, сметанно-йогуртовая заливка, сахарная пудра", 640, 1050, 1240, "dessert"], ["Мясной пир", "томатный соус, помидоры, сыр, болгарский перец, обжаренный говяжий фарш, грибы", 860, 1090, 1380, "meat"], ["С креветками", "помидоры, сыр, сыр Моцарелла, креветки", 780, 1240, 1460, "seafood"], ["Букет Прованса", "колбаса салями, сыр, сыр Моцарелла, болгарский перец, томаты черри", 860, 1060, 1290, "meat"], ["Острая «Для друзей»", "помидоры, сыр, соус Табаско, охотничьи колбаски", 820, 1060, 1280, "spicy"], ["Аль Капоне", "копчёная куриная грудка, зелень, маслины, фирменный пикантный соус, сыр, сыр Моцарелла, бекон, лук репчатый, маринованные помидоры", 860, 1090, 1290, "meat"], ["Красавчик Джони", "шампиньоны, помидоры, сыр, маринованная кукуруза, цветная капуста", 900, 1070, 1200, "veg"], ["Чикаго", "сыр, обжаренный говяжий фарш, охотничьи колбаски, лук репчатый", 840, 1090, 1360, "meat"], ["Гавайская", "копчёная куриная грудка, зелень, ветчина, сыр, сыр Моцарелла, ананас", 770, 1090, 1330, "chicken"], ["Пепперони", "зелень, маслины, томатный соус, сыр, пепперони", 790, 1040, 1260, "pepperoni"], ["Дон Луиз", "солёные огурцы, зелень, шампиньоны, копчёная колбаса, сыр", 870, 1070, 1290, "meat"], ["Коза Ностра", "зелень, ветчина, шампиньоны, сыр, соус Табаско, бекон", 820, 1090, 1340, "meat"], ["Филадельфия", "маслины, помидоры, сыр, сёмга с/с, икра красная, сыр Филадельфия, лук красный репчатый", 880, 1290, 1480, "seafood"], ["Пинини", "сосиски докторские, помидоры, сыр, бекон, лук репчатый", 870, 1080, 1240, "meat"], ["Марино", "копчёная куриная грудка, зелень, шампиньоны, фирменный пикантный соус, бекон, лук репчатый, фирменный крем-сыр", 860, 1060, 1280, "chicken"], ["Морская забава", "зелень, маслины, фирменный пикантный соус, помидоры, сыр, томаты черри, лук репчатый, сёмга с/с", 780, 1060, 1260, "seafood"], ["Рождественская", "зелень, маслины, фирменный белый соус, помидоры, сыр, болгарский перец, пепперони", 680, 920, 1080, "pepperoni"], ["Мужская", "солёные огурцы, зелень, ветчина, шампиньоны, фирменный пикантный соус, сыр Моцарелла, соус Табаско, охотничьи колбаски", 800, 1060, null, "meat"], ["Торнадо", "зелень, томатный соус, фирменный сырный соус, помидоры, обжаренный говяжий фарш, грибы, соус Табаско, лук репчатый", 920, 1040, 1200, "meat"], ["Донателло", "солёные огурцы, зелень, томатный соус, сыр, сыр Моцарелла, обжаренный говяжий фарш, лук красный репчатый, картофель отварной", 920, 1050, 1240, "meat"], ["Та самая", "зелень, ветчина, яичная заливка, томатный соус, помидоры, лук красный репчатый", 920, 1050, 1200, "meat"], ["Лацио", "зелень, ветчина, яйцо, томатный соус, фирменный сырный соус, грибы, томаты черри, бекон, лук репчатый", 950, 1050, 1260, "meat"], ["Бона", "зелень, томатный соус, помидоры, сыр, сыр Моцарелла, обжаренный говяжий фарш, картофель фри", 560, 890, 1100, "meat"], ["Амели", "зелень, маслины, томатный соус, помидоры, сыр Моцарелла, пепперони", 820, 1060, 1240, "pepperoni"], ["Валентинка", "зелень, колбаса салями, фирменный пикантный соус, помидоры, сыр Моцарелла", 740, 1060, null, "meat"], ["Маргарита", "фирменный пикантный соус, помидоры, сыр Моцарелла", 540, 1050, 1150, "cheese"], ["По-домашнему", "солёные огурцы, зелень, ветчина, томатный соус, помидоры, сыр, сыр Моцарелла", 820, 1060, 1320, "meat"], ["Каприз", "ветчина, шампиньоны, маслины, томатный соус, помидоры, сыр", 820, 1080, 1280, "meat"], ["С колбасой и грибами", "колбаса, яичная заливка, шампиньоны, томатный соус, помидоры, сыр", 860, 1050, 1260, "meat"]];
+const ROLLS  = [["Филадельфия", "икра Тобико, креветки, нори, огурец, рис, сыр Филадельфия", "195 г · 8 шт", 280], ["Греческий", "зелёный лук, кунжут белый и чёрный, маслины, нори, огурец, болгарский перец, рис, сыр Фета, томаты", "175 г · 8 шт", 240], ["Филадельфия Де Люкс", "икра красная, лосось, нори, рис, сыр Филадельфия", "235 г · 8 шт", 900], ["Унаги-Маки", "кунжут, нори, рис, угорь", "135 г · 8 шт", 235], ["Виктория", "икра Тобико, нори, рис, яичный блинчик, японский майонез", "155 г · 8 шт", 285], ["Саломон Скин", "зелёный лук, икра лосося, лосось, нори, рис, сыр сливочный, твёрдый сыр", "195 г · 8 шт", 405]];
+const SETS   = [["Сет «Филадельфия Люкс»", "Филадельфия с королевской креветкой, Филадельфия Де Люкс, Филадельфия классическая, Филадельфия с копчёным угрём, Филадельфия с огурцом", "1340 г · 40 шт", 3899], ["Сет «Праздничный 2024»", "Мини Филадельфия, горячий спайси с курицей, Сакима, Овощной Инь-Янь, Виктория, Императрица, Буррито овощное, Острый с креветкой", "1400 г · 64 шт", 1999], ["Сет роллов «Премиум»", "Буррито с угрём, Фила Тобико, Батакон, Эби ролл, Острый, Греческий, Цезарь-Филадельфия, Гармония, горячий спайси с курицей, Ватагами Темпура", "1810 г · 80 шт", 2599], ["Сет «Филадельфия»", "Филадельфия Де Люкс, Филадельфия классическая, Филадельфия с огурцом", "705 г · 24 шт", 2360], ["Сет «Рио»", "Буррито овощное, горячий спайси с курицей, ролл «Сакима»", "410 г · 24 шт", 725], ["Сет «Гурман»", "Африка ролл, Радуга ролл, Граунд ролл", "535 г · 24 шт", 1050]];
+const DRINKS = [["Коктейль «Вкусное облако»", "апельсиновый сок, банан, мороженое пломбир", "300 мл", 150], ["Вишнёвый коктейль", "вишнёвый сок, банан, мороженое пломбир", "300 мл", 150], ["Молочный коктейль", "разные вкусы, уточняйте по телефону", "300 мл", 150]];
+
+/* ВАЖНО ДЛЯ ЗАПУСКА: чтобы заказ реально приходил в Telegram,
+   вставьте сюда токен бота (от @BotFather) и chat_id кафе. Пока пусто — работает fallback через WhatsApp. */
+const TG_TOKEN = "";
+const TG_CHAT  = "";
+const WHATSAPP_PHONE = "79090000884";
+
+/* ============ РИСУЕМ ПИЦЦЫ: единый векторный стиль ============ */
+function rng(seed){ let s = seed; return () => (s = (s*9301+49297)%233280) / 233280; }
+function pizzaSVG(type, seed){
+  const r = rng(seed*7+13);
+  const sauce = (type==="dessert") ? "#f6e7c8" : (type==="cheese"||type==="seafood"||type==="chicken" && seed%3===0) ? "#f0e2c0" : "#c8402a";
+  let tops = "";
+  const put = (color, size, n, shape) => {
+    for(let i=0;i<n;i++){
+      const a = r()*Math.PI*2, rad = r()*58, x=(Math.cos(a)*rad).toFixed(1), y=(Math.sin(a)*rad).toFixed(1);
+      const rot = (r()*60-30).toFixed(0);
+      if(shape==="circle") tops += `<circle cx="${x}" cy="${y}" r="${size}" fill="${color}"/>`;
+      else if(shape==="ring") tops += `<circle cx="${x}" cy="${y}" r="${size}" fill="none" stroke="${color}" stroke-width="3.4"/>`;
+      else tops += `<rect x="${x}" y="${y}" width="${size*1.9}" height="${size*1.15}" rx="2" fill="${color}" transform="rotate(${rot} ${x} ${y})"/>`;
+    }
+  };
+  if(type==="pepperoni"){ put("#d94f2b",9,7,"circle"); put("#d94f2b",5,4,"circle"); put("#4d7a2e",4,5,"rect"); }
+  if(type==="meat"){ put("#8a4a2a",6.5,7,"rect"); put("#d9905a",5,5,"circle"); put("#f5deb0",4,3,"circle"); }
+  if(type==="chicken"){ put("#c98a3c",6,6,"rect"); put("#f2c94c",5,3,"circle"); put("#4d7a2e",3.5,5,"rect"); }
+  if(type==="mushroom"){ put("#c9a37c",6,7,"rect"); put("#8a6a4a",4,4,"rect"); }
+  if(type==="seafood"){ put("#e88a8a",7,5,"circle"); put("#d95555",4,5,"circle"); put("#e8484f",3,4,"circle"); put("#4d7a2e",3.5,4,"rect"); }
+  if(type==="veg"){ put("#e8c93a",5,6,"circle"); put("#d9f08a",4,4,"rect"); put("#8a5a2a",4,3,"rect"); }
+  if(type==="cheese"){ put("#f9d878",7,6,"circle"); put("#f2b93a",4.5,4,"circle"); }
+  if(type==="dessert"){ put("#8ac93a",5.5,4,"circle"); put("#f2e05a",5,4,"circle"); put("#a5d97a",6,2,"circle"); }
+  if(type==="spicy"){ put("#c93a2a",7,5,"ring"); put("#c93a2a",4,5,"circle"); put("#e8e04a",3,4,"circle"); }
+  const sauceCircle = `<circle r="80" fill="${sauce}"/>` + (sauce==="#c8402a" ? `<circle r="80" fill="none" stroke="#a53020" stroke-width="4" stroke-dasharray="18 9"/>` : "");
+  return `<svg viewBox="0 0 200 200"><g transform="translate(100,100)">
+    <circle r="96" fill="#d99e4e"/><circle r="96" fill="none" stroke="#b87b34" stroke-width="7"/>
+    ${sauceCircle}<circle r="76" fill="#f7c05a" opacity=".92"/>${tops}</g></svg>`;
+}
+function iconSVG(kind){
+  if(kind==="roll") return `<svg viewBox="0 0 200 200"><rect x="30" y="70" width="140" height="34" rx="17" fill="#2e211d" stroke="#e8e0d0" stroke-width="4"/><rect x="30" y="70" width="140" height="34" rx="17" fill="none" stroke="#c9a37c" stroke-width="2" stroke-dasharray="8 6"/><rect x="42" y="106" width="116" height="30" rx="15" fill="#2e211d" stroke="#e8e0d0" stroke-width="4"/><g fill="#e85a4a"><circle cx="60" cy="87" r="6"/><circle cx="100" cy="87" r="6"/><circle cx="140" cy="87" r="6"/></g><g fill="#4d7a2e"><rect x="70" y="116" width="30" height="5" rx="2.5"/><rect x="110" y="116" width="26" height="5" rx="2.5"/></g></svg>`;
+  if(kind==="set") return `<svg viewBox="0 0 200 200"><rect x="26" y="64" width="148" height="76" rx="10" fill="#2e211d" stroke="#8a6a4a" stroke-width="3"/><g><rect x="40" y="76" width="56" height="24" rx="12" fill="#e8e0d0"/><rect x="40" y="104" width="56" height="24" rx="12" fill="#e8e0d0"/><rect x="104" y="76" width="56" height="24" rx="12" fill="#f3e3c3"/><rect x="104" y="104" width="56" height="24" rx="12" fill="#f3e3c3"/></g><g fill="#e85a4a"><circle cx="68" cy="88" r="5"/><circle cx="132" cy="88" r="5"/><circle cx="68" cy="116" r="5"/><circle cx="132" cy="116" r="5"/></g></svg>`;
+  return `<svg viewBox="0 0 200 200"><path d="M70 40 h60 l-6 44 h-48Z" fill="#e8e0d0" opacity=".25"/><path d="M76 84 h48 l14 96 h-76Z" fill="#2e211d" stroke="#e8e0d0" stroke-width="4"/><path d="M76 84 h48 l4 28 h-56Z" fill="#ffb547"/><rect x="62" y="30" width="76" height="10" rx="5" fill="#c9a37c"/><g fill="#e85a4a"><circle cx="92" cy="96" r="5"/><circle cx="108" cy="106" r="4"/></g></svg>`;
+}
+
+/* ============ РЕНДЕР МЕНЮ ============ */
+const CATS = [["pizza","Пиццы"],["rolls","Роллы"],["sets","Сеты"],["wok","WOK"],["bur","Буррито"],["drinks","Напитки и десерты"],["custom","🛠️ Конструктор"]];
+let curCat = "pizza";
+let sizeSel = {}; /* выбранный размер пиццы по индексу из PIZZAS */
+function sizePrice(p, idx){ return idx===0 ? p[3] : (p[4] ?? p[3]); }
+
+function renderFilters(){
+  const h = CATS.map(c=>`<button class="chip ${c[0]===curCat?'on':''}" onclick="setCat('${c[0]}')">${c[1]}</button>`).join("");
+  document.querySelectorAll("#filters,#filters2").forEach(e=>e.innerHTML=h);
+}
+function setCat(c){ curCat=c; renderFilters(); renderGrid();
+  const b=document.getElementById("builder"); if(b) b.style.display=(c==="custom")?"":"none";
+  if(c==="custom"){ goPage("menu"); setTimeout(()=>{const b=document.getElementById("builder"); if(b) b.scrollIntoView({behavior:"smooth"});},60); }
+  else window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderGrid(){
+  const g = { set innerHTML(v){ document.querySelectorAll("#grid,#grid2").forEach(e=>e.innerHTML=v); } };
+  if(curCat==="custom"){ g.innerHTML = `<div class="card" style="grid-column:1/-1;text-align:center;padding:34px"><h3>Соберите свою пиццу в конструкторе 👇</h3><p class="ing">База 540 ₽, каждый ингредиент +90 ₽. Нажмите «Конструктор» в меню выше или прокрутите страницу.</p><a class="btn" onclick="document.getElementById('builder').scrollIntoView({behavior:'smooth'})" style="margin-top:12px">К конструктору</a></div>`; return; }
+  const src = curCat==="pizza" ? PIZZAS.map(p=>({name:p[0],ing:p[1],meta:`${p[2]} г`,p30:p[3],p40:p[4],type:p[5],kind:"pizza"}))
+           : curCat==="rolls" ? ROLLS.map(p=>({name:p[0],ing:p[1],meta:p[2],price:p[3],kind:"roll"}))
+           : curCat==="sets"  ? SETS.map(p=>({name:p[0],ing:p[1],meta:p[2],price:p[3],kind:"set"}))
+           : curCat==="wok" ? WOK.map(p=>({name:p[0],ing:p[1],meta:p[2],price:p[3],kind:"wok"}))
+           : curCat==="bur" ? BURS.map(p=>({name:p[0],ing:p[1],meta:p[2],price:p[3],kind:"bur"}))
+           : DRINKS.map(p=>({name:p[0],ing:p[1],meta:p[2],price:p[3],kind:"drink"}));
+  g.innerHTML = src.map((p,i)=>{
+    if(p.kind==="pizza"){
+      return `<div class="card">
+        <div class="card-img">${pizzaSVG(p.type,i+3)}</div>
+        <h3>${p.name}</h3><div class="ing">${p.ing}</div><div class="meta">${p.meta}</div>
+        ${p.p40? `<div class="sizes"><button class="size-btn ${sizeSel[i]===1?'':'on'}" data-s="0" onclick="pickSize(this,${i})">30 см</button><button class="size-btn ${sizeSel[i]===1?'on':''}" data-s="1" onclick="pickSize(this,${i})">40 см</button></div>` : `<div class="meta" style="color:var(--accent2)">30 см</div>`}
+        <div class="price-row"><span class="price" data-pr="${i}">${fmt(sizeSel[i]===1?sizePrice(PIZZAS[i],1):p.p30)} ₽</span><button class="add-btn" onclick="addPizza(${i})">В корзину</button></div>
+      </div>`;
+    }
+    if(p.kind==="wok"||p.kind==="bur"){
+      return `<div class="card">
+        <div class="card-img"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px">${p.kind==="wok"?"🍜":"🌯"}</div></div>
+        <h3>${p.name}</h3><div class="ing">${p.ing}</div><div class="meta">${p.meta}</div>
+        <div class="price-row"><span class="price">${fmt(p.price)} ₽</span><button class="add-btn" onclick="add${p.kind==="wok"?"Wok":"Bur"}(${i})">В корзину</button></div>
+      </div>`;
+    }
+    return `<div class="card">
+      <div class="card-img">${iconSVG(p.kind)}</div>
+      <h3>${p.name}</h3><div class="ing">${p.ing}</div><div class="meta">${p.meta}</div>
+      <div class="price-row"><span class="price">${fmt(p.price)} ₽</span><button class="add-btn" onclick="addSimpleIdx('${curCat}',${i})">В корзину</button></div>
+    </div>`;
+  }).join("");
+}
+function fmt(n){ return n.toLocaleString("ru-RU"); }
+function pickSize(btn,i){
+  const wrap = btn.parentElement; wrap.querySelectorAll(".size-btn").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on"); sizeSel[i] = +btn.dataset.s;
+  document.querySelectorAll('[data-pr="'+i+'"]').forEach(el=>el.textContent = fmt(sizePrice(PIZZAS[i], sizeSel[i])) + " ₽");
+}
+
+/* ============ КОНСТРУКТОР ============ */
+let bSize=0, bSauce="Томатный", bTops=[];
+const TOPS = ["Пепперони","Ветчина","Копчёная курица","Говяжий фарш","Бекон","Охотничьи колбаски","Шампиньоны","Ананас","Креветки","Маслины","Болгарский перец","Томаты черри"];
+const SAUCES = ["Томатный","Фирменный белый","Фирменный пикантный","Сырный"];
+function buildPrice(){ return (bSize===0?540:630) + bTops.length*90; }
+function renderBuilder(){
+  document.getElementById("bSizes").innerHTML = [["30 см",0],["40 см",1]].map(s=>`<button class="pill ${bSize===s[1]?'on':''}" onclick="setBSize(${s[1]})">${s[0]}</button>`).join("");
+  document.getElementById("bSauce").innerHTML = SAUCES.map(s=>`<button class="pill ${bSauce===s?'on':''}" onclick="setBSauce('${s}')">${s}</button>`).join("");
+  document.getElementById("bTops").innerHTML = TOPS.map(t=>`<div class="top-item ${bTops.includes(t)?'on':''}" onclick="toggleTop('${t}')"><span>${t}</span><span class="tp">+90 ₽</span></div>`).join("");
+  document.getElementById("bTotal").innerHTML = fmt(buildPrice()) + ' ₽ <small>· ' + (bTops.length? bTops.length + " ингр." : "база") + '</small>';
+  const type = bTops.length===0 ? "cheese" : bTops.some(t=>["Креветки"].includes(t)) ? "seafood" : bTops.includes("Пепперони") ? "pepperoni" : bTops.includes("Шампиньоны") ? "mushroom" : bTops.some(t=>["Ананас"].includes(t)) ? "dessert" : bTops.includes("Болгарский перец") ? "veg" : "meat";
+  document.getElementById("bPizza").innerHTML = pizzaSVG(type, bTops.length+5);
+}
+function setBSize(v){ bSize=v; renderBuilder(); }
+function setBSauce(v){ bSauce=v; renderBuilder(); }
+function toggleTop(t){ bTops.includes(t) ? bTops=bTops.filter(x=>x!==t) : bTops.push(t); renderBuilder(); }
+
+/* ============ КОРЗИНА (вкладка) ============ */
+let cart = [], pay = "cash", bday = false, selfPickup = false;
+const FREE_FROM = 1100, DELIV = 100;
+
+function jsq(s){ return s.replace(/\\/g,"\\\\").replace(/'/g,"\\'").replace(/"/g,"&quot;"); }
+
+function addToCart(name, sub, price, svg, kind, size){
+  const key = name + " | " + (sub||"");
+  const ex = cart.find(x=>x.key===key);
+  if(ex) ex.qty++;
+  else cart.push({key, name, sub, price, qty:1, svg, kind, size:size||""});
+  renderCart();
+  const b = document.getElementById("cartBar");
+  b.style.transform = "scale(1.03)"; setTimeout(()=>b.style.transform="", 180);
+}
+function addPizza(i){
+  const p = PIZZAS[i], s = sizeSel[i]||0;
+  const size = s===0 ? "30 см" : "40 см";
+  const price = s===0 ? p[3] : (p[4] ?? p[3]);
+  addToCart(`Пицца «${p[0]}»`, size, price, pizzaSVG(p.type, i+3), "pizza", size);
+}
+function addCustom(){
+  const size = bSize===0 ? "30 см" : "40 см";
+  const type = bTops.length===0 ? "cheese" : bTops.some(t=>["Креветки"].includes(t)) ? "seafood" : bTops.includes("Пепперони") ? "pepperoni" : bTops.includes("Шампиньоны") ? "mushroom" : bTops.some(t=>["Ананас"].includes(t)) ? "dessert" : bTops.includes("Болгарский перец") ? "veg" : "meat";
+  addToCart("Своя пицца", `${size} · соус: ${bSauce}` + (bTops.length? `, добавки: ${bTops.join(", ")}` : ", без добавок"), buildPrice(), pizzaSVG(type, bTops.length+5), "pizza", size);
+}
+function addSimpleIdx(cat, i){
+  const kind = cat==="rolls" ? "roll" : cat==="sets" ? "set" : "drink";
+  const arr = cat==="rolls" ? ROLLS : cat==="sets" ? SETS : DRINKS;
+  const p = arr[i];
+  addToCart(p[0], p[2], p[3], iconSVG(kind), kind);
+}
+function chQty(key, d){
+  const it = cart.find(x=>x.key===key); if(!it) return;
+  it.qty += d; if(it.qty<=0) cart = cart.filter(x=>x.key!==key);
+  renderCart();
+}
+function delItem(key){ cart = cart.filter(x=>x.key!==key); renderCart(); }
+
+/* ---- акция именинника ---- */
+function p40count(){ return cart.filter(x=>x.size==="40 см").reduce((s,x)=>s+x.qty,0); }
+function promoGifts(){
+  if(!bday || pay!=="cash") return [];
+  if(p40count()<2) return [];
+  const excl = ["Кальцоне","Рождественская"];
+  const el = cart.filter(x=>x.kind==="pizza" && !excl.some(e=>x.name.includes(e)));
+  if(!el.length) return [];
+  el.sort((a,b)=>a.price-b.price);
+  return [{key:el[0].key, amount:el[0].price}]; /* бесплатной становится одна пицца — самая дешёвая */
+}
+function totals(){
+  const g = promoGifts();
+  let sum = 0, saved = 0;
+  cart.forEach(it=>{
+    let line = it.price*it.qty;
+    const gg = g.find(x=>x.key===it.key);
+    if(gg){ const d = Math.min(gg.amount, line); line -= d; saved += d; }
+    sum += line;
+  });
+  const dv = (selfPickup || !cart.length || sum>=FREE_FROM) ? 0 : DELIV;
+  return {sum, dv, gifts:g, saved};
+}
+
+/* ---- отрисовка ---- */
+function renderCart(){
+  const n = cart.reduce((s,x)=>s+x.qty,0);
+  const t = totals();
+  document.getElementById("cartCount").textContent = n;
+  document.getElementById("cartSum").textContent = fmt(t.sum+t.dv) + " ₽";
+  document.getElementById("cartBar").classList.toggle("show", n>0);
+  document.getElementById("shipNote").textContent = n===0 ? "" : selfPickup ? "Самовывоз — без доставки" : (t.sum>=FREE_FROM ? "Доставка бесплатна 🎉" : `До бесплатной доставки: ${fmt(FREE_FROM-t.sum)} ₽`);
+  const nb=document.getElementById("navBadge"); if(nb) nb.textContent=n;
+  renderCartTab(t, n);
+}
+function payHints(t){
+  if(pay==="card" && bday) return `<p class="hint gold">⚠ Акция именинника действует при наличной оплате — выберите «Наличными», чтобы сохранить подарок.</p>`;
+  if(bday && !t.gifts.length) return p40count()<2
+    ? `<p class="hint gold">Условия акции пока не выполнены: нужно минимум 2 пиццы размером 40 см в корзине.</p>`
+    : `<p class="hint gold">Пиццы 40 см есть — но подарок действует только при наличной оплате.</p>`;
+  return "";
+}
+function renderCartTab(t, n){
+  const box = document.getElementById("cartItems");
+  const sub = document.getElementById("cartSub");
+  const panel = document.getElementById("cartPanel");
+  if(!n){
+    box.innerHTML = `<div class="cart-empty"><div class="big">🍕</div><b>Корзина пока пуста</b><p>Добавьте пиццу, роллы или сеты из меню — они появятся здесь с картинками.</p><a class="btn" onclick="goPage('menu')">Смотреть меню</a></div>`;
+    sub.textContent = "Пока пусто — выберите что-нибудь из меню.";
+    panel.style.display = "none";
+    return;
+  }
+  box.innerHTML = "";
+  panel.style.display = "block";
+  sub.textContent = `В корзине ${n} поз. — меняйте количество, удаляйте позиции и оформляйте заказ прямо здесь.`;
+  document.getElementById("cartList").innerHTML = cart.map(it=>{
+    const g = t.gifts.find(x=>x.key===it.key);
+    const line = g ? it.price*it.qty-g.amount : it.price*it.qty;
+    return `<div class="citem${g?" gift":""}">
+      <div class="cimg">${it.svg}</div>
+      <div class="cinfo"><b>${it.name}</b><small>${it.sub}${g?'<br><span class="gift-tag">ПОДАРОК 🎉</span>':""}</small></div>
+      <div class="qty"><button onclick="chQty('${jsq(it.key)}',-1)">−</button><b>${it.qty}</b><button onclick="chQty('${jsq(it.key)}',1)">+</button></div>
+      <div class="cprice">${g?`<s>${fmt(it.price*it.qty)} ₽</s><br>`:""}<b>${fmt(line)} ₽</b></div>
+      <button class="del" onclick="delItem('${jsq(it.key)}')" title="Удалить">🗑</button>
+    </div>`;
+  }).join("");
+  const hints = payHints(t);
+  document.getElementById("cartSummary").innerHTML = `
+    <div class="sumrow"><span>Сумма заказа</span><span>${fmt(cart.reduce((a,c)=>a+c.price*c.qty,0))} ₽</span></div>
+    ${t.gifts.length?`<div class="sumrow gift-row"><span>🎉 Подарок именинника</span><span>−${fmt(t.saved)} ₽</span></div>`:""}
+    <div class="sumrow"><span>Доставка${selfPickup?" (самовывоз)":(t.dv?` (${fmt(DELIV)} ₽)`:" (бесплатно)")}</span><span>${t.dv?fmt(t.dv)+" ₽":"0 ₽"}</span></div>
+    <div class="sumrow total"><span>Итого</span><span>${fmt(t.sum+t.dv)} ₽</span></div>
+    ${hints}`;
+}
+function setPay(btn){
+  document.querySelectorAll(".pay-group .chip").forEach(b=>b.classList.remove("on"));
+  btn.classList.add("on"); pay = btn.dataset.pay; renderCart();
+}
+function toggleAddr(){ document.getElementById("addrWrap").style.display = selfPickup ? "none" : "block"; }
+function showCartTab(){ document.getElementById("cart").scrollIntoView({behavior:"smooth"}); }
+
+/* ---- оформление заказа ---- */
+function submitOrder(){
+  const name = document.getElementById("fName").value.trim();
+  const phone = document.getElementById("fPhone").value.trim();
+  const addr = document.getElementById("fAddr").value.trim();
+  const comment = document.getElementById("fComment").value.trim();
+  if(!name || !phone || (!selfPickup && !addr)){ alert("Заполните имя, телефон и адрес (или отметьте самовывоз)"); return; }
+  const t = totals();
+  const lines = cart.map(it=>{
+    const g = t.gifts.find(x=>x.key===it.key);
+    return `• ${it.name} (${it.sub}) ×${it.qty}${g?" — ПОДАРОК 🎉":""} — ${fmt(g?it.price*it.qty-g.amount:it.price*it.qty)} ₽`;
+  }).join("\n");
+  let text = `🔥 НОВЫЙ ЗАКАЗ (сайт)\n\n${lines}\n`;
+  if(t.gifts.length) text += `\n🎉 Подарок именинника: −${fmt(t.saved)} ₽`;
+  text += `\nСумма: ${fmt(t.sum)}\nДоставка: ${t.dv?fmt(t.dv)+" ₽":"бесплатно"}\nИТОГО: ${fmt(t.sum+t.dv)} ₽`;
+  text += `\nОплата: ${pay==="cash"?"наличными":"картой"}`;
+  text += `\nИмя: ${name}\nТелефон: ${phone}\n${selfPickup?"Самовывоз":"Адрес: "+addr}`;
+  if(comment) text += `\nКомментарий: ${comment}`;
+  if(bday && t.gifts.length) text += `\n🎂 АКЦИЯ ИМЕНИННИКА активна (нужна наличная оплата и паспорт)`;
+  if(TG_TOKEN && TG_CHAT){
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT,text})}).then(()=>showOk());
+  } else {
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=`+encodeURIComponent(text),"_blank");
+    showOk();
+  }
+}
+function showOk(){
+  const ok = document.getElementById("cartOk");
+  ok.style.display = "block";
+  ok.scrollIntoView({behavior:"smooth"});
+  document.getElementById("orderNum").textContent = "#" + (Math.floor(Math.random()*900)+100);
+  cart = [];
+  const bb = document.getElementById("bdayBox"); if(bb) bb.checked = false; bday = false;
+  renderCart();
+  setTimeout(()=>{ ok.style.display = "none"; }, 9000);
+}
+
+
+/* ============ WOK, БУРРИТО, БАНКЕТНЫЙ ЗАЛ (zhar-pizza66.ru) ============ */
+const WOK = [
+ ["WOK с овощами в кисло-сладком соусе","лапша удон, овощи, кисло-сладкий соус, кунжут","250 г",260],
+ ["WOK с морепродуктами в устричном соусе","лапша удон, морской коктейль, овощи, соус устричный","270 г",345],
+ ["WOK с тигровыми креветками в устричном соусе","фунчоза, тигровые креветки, овощи, соус устричный","270 г",395],
+ ["WOK с курицей в кисло-сладком соусе","гречневая лапша, куриное филе, овощи","270 г",295],
+ ["WOK со свининой и овощами в соусе унаги","яичная лапша, свинина, грибы, соус унаги","270 г",345],
+ ["WOK с лососем в соусе терияки","яичная лапша, лосось, фасоль стручковая, соус терияки","270 г",385],
+ ["WOK с говядиной в соусе терияки","удон, говядина, овощи, соус терияки","270 г",395]
+];
+const BURS = [
+ ["Буррито с курицей","мексиканская сырная лепешка","",315],
+ ["Буррито с копчёным лососем","мексиканская сырная лепешка","",385],
+ ["Буррито овощное","мексиканская сырная лепешка","",245],
+ ["Буррито с угрём","мексиканская сырная лепешка","",355],
+ ["Буррито с беконом","мексиканская сырная лепешка, огурец, томаты, сливочный сыр, лист салата, зелёный лук, бекон","",290],
+ ["Горячий буррито с курицей","мексиканская сырная лепешка, рис, копчёная курица, соус спайси, огурец, томаты, сливочный сыр","",345],
+ ["Сет «Маленькая Мексика»","буррито с курицей, с копчёным лососем и овощное","",899],
+ ["Сет «Тёплая Мексика»","буррито с курицей, с копчёным лососем, овощное и горячее с курицей","",1111],
+ ["Сет «Мексикано»","буррито с курицей, с копчёным лососем, овощное, с угрём и с беконом","",1220]
+];
+const BK = {
+ "Салаты":[
+  ["Цезарь","заправка, зелень, куриная грудка, пекинская капуста, перепелиные яйца, помидоры, сухарики, сыр Пармезан","110 г",185],
+  ["Праздничный","зелень, икра лососевая, картофель, лимон, майонез, маслины, помидоры, сёмга слабосолёная, яйцо","110 г",270],
+  ["Греческий","зелень, маслины, огурцы, оливковое масло, перец болгарский, помидоры, сыр Фетакса","110 г",190],
+  ["День рождения","зелень, куриное филе, майонез, огурцы, помидоры, яблоко, яйцо","105 г",185],
+  ["Моя прекрасная леди","ветчина, зелень, капуста, кукуруза, майонез, сухарики","100 г",150],
+  ["Гренадер","говядина отварная, грецкие орехи, зелень, картофель, майонез, морковь, свёкла, чернослив","100 г",290],
+  ["Гнездо глухаря","ветчина, зелень, картофель, курица, шампиньоны, яйцо","120 г",205],
+  ["Белая берёза","шампиньоны, куриное филе, майонез, свежие огурцы, чернослив, яйцо","100 г",260],
+  ["Подсолнух","жареные шампиньоны, зелень, куриная грудка, майонез, маслины, сыр, чипсы, яйцо","100 г",245],
+  ["Восхищение","зелень, куриная копчёная грудка, майонез, огурцы, помидоры, сыр, чеснок","100 г",155]
+ ],
+ "Нарезки":[
+  ["Солёный погребок","грибы, квашеная капуста, огурцы и помидоры маринованные","200 г",245],
+  ["Фруктовая нарезка","апельсин, виноград, груша, яблоко","200 г",380],
+  ["Овощная нарезка","зелень, огурцы, перец болгарский, помидоры","110 г",280],
+  ["Рыбная нарезка","горбуша, сёмга, скумбрия","110 г",480],
+  ["Сырная нарезка","сыр Моцарелла, Мраморный, Российский","150 г",440],
+  ["Мясная нарезка","ветчина, говядина копчёная, колобок куриный, маслины, огурцы, помидоры, сервелат","165 г",460]
+ ],
+ "Горячее":[
+  ["Мясо по-французски","","200 г",365],
+  ["Мясная слоёнка в фольге","","280 г",385],
+  ["Вак беляш","","100 г",150],
+  ["Курица под ананасовым соусом","","280 г",375],
+  ["Горбуша с овощами","","150 г",340]
+ ],
+ "Гарниры":[
+  ["Крокеты","","150 г",195],
+  ["Овощи гриль","","150 г",290],
+  ["Картофельное пюре","","150 г",135],
+  ["Картофель фри","","150 г",155]
+ ]
+};
+
+function logoHome(){ if(curCat==="custom"){ curCat="pizza"; renderFilters(); renderGrid(); } goPage("home"); return false; }
+function goPage(pg){
+  document.querySelectorAll(".pg").forEach(e=>e.classList.toggle("on", e.id==="pg-"+pg));
+  const bb=document.getElementById("builder"); if(bb) bb.style.display=(curCat==="custom")?"":"none";
+  document.querySelectorAll(".topnav .pill").forEach(a=>a.classList.toggle("act", a.dataset.pg===pg));
+  window.scrollTo({top:0});
+}
+function addWok(i){ const p=WOK[i]; addToCart(p[0], p[2], p[3], `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px">🍜</div>`, "wok"); }
+function addBur(i){ const p=BURS[i]; addToCart(p[0], p[2]||"", p[3], `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px">🌯</div>`, "bur"); }
+function bkIcon(c){ return c==="Салаты" ? "🥗" : c==="Нарезки" ? "🧀" : c==="Горячее" ? "🍲" : "🍟"; }
+let bkCat = "Салаты";
+function renderBanket(){
+  document.getElementById("bkFilters").innerHTML = Object.keys(BK).map(c=>`<button class="chip ${c===bkCat?'on':''}" onclick="setBk('${c}')">${c}</button>`).join("");
+  document.getElementById("bkGrid").innerHTML = BK[bkCat].map((p,i)=>`
+    <div class="card">
+      <div class="card-img"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:56px">${bkIcon(bkCat)}</div></div>
+      <h3>${p[0]}</h3>${p[1]?`<div class="ing">${p[1]}</div>`:""}<div class="meta">${p[2]}</div>
+      <div class="price-row"><span class="price">${fmt(p[3])} ₽</span><button class="add-btn" onclick="bkAdd(${i})">В корзину</button></div>
+    </div>`).join("");
+}
+function setBk(c){ bkCat=c; renderBanket(); }
+function bkAdd(i){ const p=BK[bkCat][i]; addToCart(p[0], p[2], p[3], `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:52px">${bkIcon(bkCat)}</div>`, "bk"); }
+function bookHall(){
+  const name=document.getElementById("bkName").value.trim();
+  const phone=document.getElementById("bkPhone").value.trim();
+  const date=document.getElementById("bkDate").value;
+  const time=document.getElementById("bkTime").value;
+  const guests=document.getElementById("bkGuests").value;
+  const note=document.getElementById("bkNote").value.trim();
+  if(!name || !phone || !date || !guests){ alert("Заполните имя, телефон, дату и количество гостей"); return; }
+  let text = `🎉 ЗАЯВКА НА БАНКЕТНЫЙ ЗАЛ\n\nИмя: ${name}\nТелефон: ${phone}\nДата: ${date}${time?" "+time:""}\nГостей: ${guests}`;
+  if(note) text += `\nПожелания: ${note}`;
+  if(typeof TG_TOKEN!=="undefined" && TG_TOKEN && TG_CHAT){
+    fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:TG_CHAT,text})}).then(()=>alert("Заявка отправлена! Мы перезвоним и подтвердим бронь."));
+  } else {
+    window.open(`https://wa.me/${WHATSAPP_PHONE}?text=`+encodeURIComponent(text),"_blank");
+    alert("Заявка сформирована — отправьте её в WhatsApp, и мы подтвердим бронь.");
+  }
+}
+
+/* старт */
+renderFilters(); renderGrid(); renderBuilder(); renderCart(); renderBanket(); goPage("home");
+</script>
+</body>
+</html>
